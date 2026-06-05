@@ -6,13 +6,17 @@ import BottomBar from './BottomBar'
 import Items from '../pages/Items'
 import Settings from '../pages/Settings'
 
-function Layout() {
+interface LayoutProps {
+  onLogout: () => void
+}
+
+function Layout({ onLogout }: LayoutProps) {
   const [currentPage, setCurrentPage] = useState<string>('items')
   const isLargeScreen = useMediaQuery('(min-width:768px)')
 
   function renderPage() {
     if (currentPage === 'items') return <Items />
-    if (currentPage === 'settings') return <Settings />
+    if (currentPage === 'settings') return <Settings onLogout={onLogout} />
     return null
   }
 

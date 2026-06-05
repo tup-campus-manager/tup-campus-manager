@@ -12,11 +12,16 @@ function App() {
     setIsLoggedIn(true)
   }
 
+  function handleLogout() {
+    sessionStorage.removeItem('session')
+    setIsLoggedIn(false)
+  }
+
   if (!isLoggedIn) {
     return <Login onLogin={handleLogin} />
   }
 
-  return <Layout />
+  return <Layout onLogout={handleLogout} />
 }
 
 export default App

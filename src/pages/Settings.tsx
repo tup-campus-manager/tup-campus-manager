@@ -12,24 +12,25 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogActions from '@mui/material/DialogActions'
 import Divider from '@mui/material/Divider'
 import SchoolIcon from '@mui/icons-material/School'
+import { signOut, type User } from 'firebase/auth'
+import { auth } from '../firebase/config'
 
 interface SettingsProps {
+  user: User
   onLogout: () => void
 }
 
-const mockUser = {
-  name: 'Juan Pérez',
-  email: 'juan.perez@campus.edu.ar',
-  avatar: 'https://i.pravatar.cc/150?img=12',
-}
-
-function Settings({ onLogout }: SettingsProps) {
+function Settings({ user, onLogout }: SettingsProps) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false)
 
-  function handleLogoutConfirm() {
-    sessionStorage.removeItem('session')
-    setDialogOpen(false)
-    onLogout()
+  async function handleLogoutConfirm() {
+    try {
+      await signOut(auth)
+      setDialogOpen(false)
+      onLogout()
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   return (
@@ -42,13 +43,17 @@ function Settings({ onLogout }: SettingsProps) {
       <Card>
         <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
           <Avatar
-            src={mockUser.avatar}
-            alt={mockUser.name}
+            src={user.photoURL ?? ''}
+            alt={user.displayName ?? 'Usuario'}
             sx={{ width: 80, height: 80 }}
           />
           <Box>
-            <Typography variant="h6" fontWeight={700}>{mockUser.name}</Typography>
-            <Typography variant="body2" color="text.secondary">{mockUser.email}</Typography>
+            <Typography variant="h6" fontWeight={700}>
+              {user.displayName ?? 'Usuario'}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {user.email ?? ''}
+            </Typography>
             <Button
               variant="outlined"
               color="error"

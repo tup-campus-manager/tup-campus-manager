@@ -1,22 +1,24 @@
 import { useState } from 'react'
 import Box from '@mui/material/Box'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import { type User } from 'firebase/auth'
 import Sidebar from './Sidebar'
 import BottomBar from './BottomBar'
 import Items from '../pages/Items'
 import Settings from '../pages/Settings'
 
 interface LayoutProps {
+  user: User
   onLogout: () => void
 }
 
-function Layout({ onLogout }: LayoutProps) {
+function Layout({ user, onLogout }: LayoutProps) {
   const [currentPage, setCurrentPage] = useState<string>('items')
   const isLargeScreen = useMediaQuery('(min-width:768px)')
 
   function renderPage() {
     if (currentPage === 'items') return <Items />
-    if (currentPage === 'settings') return <Settings onLogout={onLogout} />
+    if (currentPage === 'settings') return <Settings user={user} onLogout={onLogout} />
     return null
   }
 

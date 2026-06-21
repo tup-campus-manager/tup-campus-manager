@@ -1,0 +1,31 @@
+
+{
+  "login": {
+    "title": "Campus Manager",
+    "button": "Iniciar sesión con Google",
+    "error": "Error al iniciar sesión. Intentá de nuevo."
+  },
+  "items": {
+    "title": "Items",
+    "search": "Buscar...",
+    "sortBy": "Ordenar por",
+    "error": "No se pudieron cargar los elementos. Intente más tarde."
+  },
+  "configuracion": {
+    "title": "Configuración",
+    "perfil": "Perfil",
+    "nombre": "Nombre",
+    "email": "Email",
+    "acerca": "Acerca de la app",
+    "version": "Versión",
+    "userAgent": "User Agent",
+    "cerrarSesion": "Cerrar sesión",
+    "confirmacion": "¿Estás seguro que querés cerrar sesión?",
+    "confirmar": "Sí, cerrar sesión",
+    "cancelar": "Cancelar"
+  },
+  "nav": {
+    "items": "Items",
+    "configuracion": "Configuración"
+  }
+}

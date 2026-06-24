@@ -4,6 +4,8 @@ import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
 import SchoolIcon from '@mui/icons-material/School'
+import { signInWithPopup } from 'firebase/auth'
+import { auth, googleProvider } from '../firebase/config'
 
 interface LoginProps {
   onLogin: () => void
@@ -11,13 +13,20 @@ interface LoginProps {
 
 function Login({ onLogin }: LoginProps) {
   const [loading, setLoading] = useState<boolean>(false)
+  const [error, setError] = useState<string | null>(null)
 
-  function handleClick() {
+  async function handleClick() {
     setLoading(true)
-    setTimeout(() => {
-      setLoading(false)
+    setError(null)
+    try {
+      await signInWithPopup(auth, googleProvider)
       onLogin()
-    }, 2000)
+    } catch (err) {
+      console.error(err)
+      setError('No se pudo iniciar sesión. Intentá de nuevo.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -42,6 +51,12 @@ function Login({ onLogin }: LoginProps) {
         Iniciá sesión para continuar
       </Typography>
 
+      {error && (
+        <Typography variant="body2" color="error">
+          {error}
+        </Typography>
+      )}
+
       <Button
         variant="contained"
         size="large"
@@ -50,7 +65,7 @@ function Login({ onLogin }: LoginProps) {
         startIcon={loading ? <CircularProgress size={20} color="inherit" /> : null}
         sx={{ minWidth: 200 }}
       >
-        {loading ? 'Verificando...' : 'Iniciar sesión'}
+        {loading ? 'Verificando...' : 'Iniciar sesión con Google'}
       </Button>
     </Box>
   )

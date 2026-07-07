@@ -1,32 +1,23 @@
-import { useState } from 'react'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import CircularProgress from '@mui/material/CircularProgress'
-import Typography from '@mui/material/Typography'
-import SchoolIcon from '@mui/icons-material/School'
-import { signInWithPopup } from 'firebase/auth'
-import { auth, googleProvider } from '../firebase/config'
+import { useState } from 'react';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
+import Typography from '@mui/material/Typography';
+import SchoolIcon from '@mui/icons-material/School';
 
 interface LoginProps {
-  onLogin: () => void
+  onLogin: () => void;
 }
 
 function Login({ onLogin }: LoginProps) {
-  const [loading, setLoading] = useState<boolean>(false)
-  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState<boolean>(false);
 
-  async function handleClick() {
-    setLoading(true)
-    setError(null)
-    try {
-      await signInWithPopup(auth, googleProvider)
-      onLogin()
-    } catch (err) {
-      console.error(err)
-      setError('No se pudo iniciar sesión. Intentá de nuevo.')
-    } finally {
-      setLoading(false)
-    }
+  function handleClick() {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      onLogin();
+    }, 2000);
   }
 
   return (
@@ -51,24 +42,20 @@ function Login({ onLogin }: LoginProps) {
         Iniciá sesión para continuar
       </Typography>
 
-      {error && (
-        <Typography variant="body2" color="error">
-          {error}
-        </Typography>
-      )}
-
       <Button
         variant="contained"
         size="large"
         onClick={handleClick}
         disabled={loading}
-        startIcon={loading ? <CircularProgress size={20} color="inherit" /> : null}
+        startIcon={
+          loading ? <CircularProgress size={20} color="inherit" /> : null
+        }
         sx={{ minWidth: 200 }}
       >
-        {loading ? 'Verificando...' : 'Iniciar sesión con Google'}
+        {loading ? 'Verificando...' : 'Iniciar sesión'}
       </Button>
     </Box>
-  )
+  );
 }
 
-export default Login
+export default Login;

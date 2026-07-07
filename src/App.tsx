@@ -1,36 +1,27 @@
-import { useEffect, useState } from 'react'
-import { onAuthStateChanged, type User } from 'firebase/auth'
-import { auth } from './firebase/config'
-import Login from './components/Login'
-import Layout from './components/Layout'
-import CircularProgress from '@mui/material/CircularProgress'
-import Box from '@mui/material/Box'
+import { useState } from 'react';
+import Login from './components/Login';
+import Layout from './components/Layout';
 
 function App() {
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState<boolean>(true)
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
+    return sessionStorage.getItem('session') === 'active';
+  });
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser)
-      setLoading(false)
-    })
-    return () => unsubscribe()
-  }, [])
-
-  if (loading) {
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
-        <CircularProgress />
-      </Box>
-    )
+  function handleLogin() {
+    sessionStorage.setItem('session', 'active');
+    setIsLoggedIn(true);
   }
 
-  if (!user) {
-    return <Login onLogin={() => {}} />
+  function handleLogout() {
+    sessionStorage.removeItem('session');
+    setIsLoggedIn(false);
   }
 
-  return <Layout user={user} onLogout={() => {}} />
+  if (!isLoggedIn) {
+    return <Login onLogin={handleLogin} />;
+  }
+
+  return <Layout onLogout={handleLogout} />;
 }
 
-export default App
+export default App;

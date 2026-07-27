@@ -1,0 +1,31 @@
+
+{
+  "login": {
+    "title": "Campus Manager",
+    "button": "Sign in with Google",
+    "error": "Login error. Please try again."
+  },
+  "items": {
+    "title": "Items",
+    "search": "Search...",
+    "sortBy": "Sort by",
+    "error": "Could not load items. Please try again later."
+  },
+  "configuracion": {
+    "title": "Settings",
+    "perfil": "Profile",
+    "nombre": "Name",
+    "email": "Email",
+    "acerca": "About",
+    "version": "Version",
+    "userAgent": "User Agent",
+    "cerrarSesion": "Sign out",
+    "confirmacion": "Are you sure you want to sign out?",
+    "confirmar": "Yes, sign out",
+    "cancelar": "Cancel"
+  },
+  "nav": {
+    "items": "Items",
+    "configuracion": "Settings"
+  }
+}

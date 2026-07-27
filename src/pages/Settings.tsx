@@ -1,41 +1,49 @@
-import { useState } from 'react'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import Dialog from '@mui/material/Dialog'
-import DialogTitle from '@mui/material/DialogTitle'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
-import DialogActions from '@mui/material/DialogActions'
-import Divider from '@mui/material/Divider'
-import SchoolIcon from '@mui/icons-material/School'
-import { signOut, type User } from 'firebase/auth'
-import { auth } from '../firebase/config'
+import { useState } from 'react';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogActions from '@mui/material/DialogActions';
+import Divider from '@mui/material/Divider';
+import SchoolIcon from '@mui/icons-material/School';
+import { signOut, type User } from 'firebase/auth';
+import { auth } from '../firebase/config';
 
 interface SettingsProps {
-  user: User
-  onLogout: () => void
+  user: User;
+  onLogout: () => void;
 }
 
 function Settings({ user, onLogout }: SettingsProps) {
-  const [dialogOpen, setDialogOpen] = useState<boolean>(false)
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   async function handleLogoutConfirm() {
     try {
-      await signOut(auth)
-      setDialogOpen(false)
-      onLogout()
+      await signOut(auth);
+      setDialogOpen(false);
+      onLogout();
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
   }
 
   return (
-    <Box sx={{ p: 3, display: 'flex', flexDirection: 'column', gap: 3, maxWidth: 600 }}>
-      <Typography variant="h4" fontWeight={700}>
+    <Box
+      sx={{
+        p: 3,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 3,
+        maxWidth: 600,
+      }}
+    >
+      <Typography variant="h4" sx={{ fontWeight: 700 }}>
         Configuración
       </Typography>
 
@@ -48,7 +56,7 @@ function Settings({ user, onLogout }: SettingsProps) {
             sx={{ width: 80, height: 80 }}
           />
           <Box>
-            <Typography variant="h6" fontWeight={700}>
+            <Typography variant="h6" sx={{ fontWeight: 700 }}>
               {user.displayName ?? 'Usuario'}
             </Typography>
             <Typography variant="body2" color="text.secondary">
@@ -72,18 +80,24 @@ function Settings({ user, onLogout }: SettingsProps) {
         <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <SchoolIcon sx={{ color: '#1d4ed8', fontSize: 32 }} />
-            <Typography variant="h6" fontWeight={700}>Campus Manager</Typography>
+            <Typography variant="h6" sx={{ fontWeight: 700 }}>
+              Campus Manager
+            </Typography>
           </Box>
 
           <Divider />
 
           <Box>
-            <Typography variant="body2" color="text.secondary">Versión</Typography>
+            <Typography variant="body2" color="text.secondary">
+              Versión
+            </Typography>
             <Typography variant="body1">0.0.0</Typography>
           </Box>
 
           <Box>
-            <Typography variant="body2" color="text.secondary">User Agent</Typography>
+            <Typography variant="body2" color="text.secondary">
+              User Agent
+            </Typography>
             <Typography
               variant="body2"
               sx={{
@@ -105,18 +119,23 @@ function Settings({ user, onLogout }: SettingsProps) {
         <DialogTitle>¿Cerrar sesión?</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            ¿Estás seguro que querés cerrar sesión? Vas a tener que volver a iniciar sesión la próxima vez.
+            ¿Estás seguro que querés cerrar sesión? Vas a tener que volver a
+            iniciar sesión la próxima vez.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDialogOpen(false)}>Cancelar</Button>
-          <Button onClick={handleLogoutConfirm} color="error" variant="contained">
+          <Button
+            onClick={handleLogoutConfirm}
+            color="error"
+            variant="contained"
+          >
             Cerrar sesión
           </Button>
         </DialogActions>
       </Dialog>
     </Box>
-  )
+  );
 }
 
-export default Settings
+export default Settings;

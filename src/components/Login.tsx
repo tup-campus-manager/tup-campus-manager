@@ -7,6 +7,8 @@ import SchoolIcon from '@mui/icons-material/School'
 import { signInWithPopup } from 'firebase/auth'
 import { auth, googleProvider } from '../firebase/config'
 
+import { trackEvent } from '../services/analytics.service'
+
 interface LoginProps {
   onLogin: () => void
 }
@@ -19,7 +21,14 @@ function Login({ onLogin }: LoginProps) {
     setLoading(true)
     setError(null)
     try {
-      await signInWithPopup(auth, googleProvider)
+      const result = await signInWithPopup(auth, googleProvider)
+
+      // Evento 1 — Login con email (requerido por el TP9)
+      trackEvent('login', {
+        method: 'Google',
+        user_email: result.user.email,
+      })
+
       onLogin()
     } catch (err) {
       console.error(err)
@@ -43,7 +52,7 @@ function Login({ onLogin }: LoginProps) {
     >
       <SchoolIcon sx={{ fontSize: 80, color: '#1d4ed8' }} />
 
-      <Typography variant="h4" fontWeight={700} color="#1f2937">
+      <Typography variant="h4" sx={{ fontWeight: 700, color: '#1f2937' }}>
         Campus Manager
       </Typography>
 

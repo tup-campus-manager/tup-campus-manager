@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import * as Sentry from '@sentry/react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -12,8 +11,6 @@ import InputLabel from '@mui/material/InputLabel'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Avatar from '@mui/material/Avatar'
-import { trackEvent } from '../services/analytics.service'
-import { auth } from '../firebase/config'
 
 interface Student {
   name: { first: string; last: string }
@@ -50,17 +47,6 @@ function Items() {
   const [sortBy, setSortBy] = useState<string>('firstName')
 
   useEffect(() => {
-    // Evento 2 — Vista de Items
-    trackEvent('page_view', {
-      page_title: 'Estudiantes',
-      page_location: '/items',
-    })
-
-    // Error forzado con email del usuario (requerido por TP9)
-    const user = auth.currentUser
-    Sentry.setUser({ email: user?.email ?? 'unknown' })
-    Sentry.captureException(new Error('Error forzado de prueba post-login'))
-
     const cached = getCache()
     if (cached) {
       setStudents(cached)
@@ -121,7 +107,7 @@ function Items() {
 
   return (
     <Box sx={{ p: 3 }}>
-      <Typography variant="h4" sx={{ fontWeight: 700, mb: 3 }}>
+      <Typography variant="h4" fontWeight={700} sx={{ mb: 3 }}>
         Estudiantes
       </Typography>
 
@@ -132,12 +118,6 @@ function Items() {
           size="small"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          onBlur={() => {
-            if (search) {
-              // Evento 3 — Búsqueda
-              trackEvent('search', { search_term: search })
-            }
-          }}
           placeholder="Nombre, email, ciudad..."
           sx={{ minWidth: 220 }}
         />
@@ -165,7 +145,7 @@ function Items() {
               sx={{ width: 64, height: 64, ml: 1 }}
             />
             <CardContent sx={{ p: 1, '&:last-child': { pb: 1 } }}>
-              <Typography sx={{ fontWeight: 700 }}>
+              <Typography fontWeight={700}>
                 {student.name.first} {student.name.last}
               </Typography>
               <Typography variant="body2" color="text.secondary">{student.email}</Typography>

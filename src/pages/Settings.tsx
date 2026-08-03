@@ -35,7 +35,7 @@ function Settings({ user, onLogout }: SettingsProps) {
 
   return (
     <Box sx={{ p: 3, display: 'flex', flexDirection: 'column', gap: 3, maxWidth: 600 }}>
-      <Typography variant="h4" sx={{ fontWeight: 700 }}>
+      <Typography variant="h4" fontWeight={700}>
         Configuración
       </Typography>
 
@@ -48,7 +48,7 @@ function Settings({ user, onLogout }: SettingsProps) {
             sx={{ width: 80, height: 80 }}
           />
           <Box>
-            <Typography variant="h6" sx={{ fontWeight: 700 }}>
+            <Typography variant="h6" fontWeight={700}>
               {user.displayName ?? 'Usuario'}
             </Typography>
             <Typography variant="body2" color="text.secondary">
@@ -72,7 +72,7 @@ function Settings({ user, onLogout }: SettingsProps) {
         <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <SchoolIcon sx={{ color: '#1d4ed8', fontSize: 32 }} />
-            <Typography variant="h6" sx={{ fontWeight: 700 }}>Campus Manager</Typography>
+            <Typography variant="h6" fontWeight={700}>Campus Manager</Typography>
           </Box>
 
           <Divider />

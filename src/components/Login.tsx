@@ -43,7 +43,7 @@ function Login({ onLogin }: LoginProps) {
     >
       <SchoolIcon sx={{ fontSize: 80, color: '#1d4ed8' }} />
 
-      <Typography variant="h4" fontWeight={700} color="#1f2937">
+      <Typography variant="h4" color="#1f2937" sx={{ fontWeight: 700 }}>
         Campus Manager
       </Typography>
 

@@ -5,6 +5,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
 import SchoolIcon from '@mui/icons-material/School'
 import { signInWithPopup } from 'firebase/auth'
+import * as Sentry from '@sentry/react'
 import { auth, googleProvider } from '../firebase/config'
 
 import { trackEvent } from '../services/analytics.service'
@@ -28,6 +29,12 @@ function Login({ onLogin }: LoginProps) {
         method: 'Google',
         user_email: result.user.email,
       })
+
+      // Error forzado para Sentry (requerido por el TP9)
+      Sentry.setUser({ email: result.user.email ?? undefined })
+      Sentry.captureException(
+        new Error(`Error forzado después del inicio de sesión de ${result.user.email}`),
+      )
 
       onLogin()
     } catch (err) {

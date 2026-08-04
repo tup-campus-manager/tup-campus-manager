@@ -107,7 +107,7 @@ function Items() {
 
   return (
     <Box sx={{ p: 3 }}>
-      <Typography variant="h4" fontWeight={700} sx={{ mb: 3 }}>
+      <Typography variant="h4" sx={{ fontWeight: 700, mb: 3 }}>
         Estudiantes
       </Typography>
 
@@ -145,7 +145,7 @@ function Items() {
               sx={{ width: 64, height: 64, ml: 1 }}
             />
             <CardContent sx={{ p: 1, '&:last-child': { pb: 1 } }}>
-              <Typography fontWeight={700}>
+              <Typography sx={{ fontWeight: 700 }}>
                 {student.name.first} {student.name.last}
               </Typography>
               <Typography variant="body2" color="text.secondary">{student.email}</Typography>

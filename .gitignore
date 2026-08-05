@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# Lighthouse
+.lighthouseci/
+lighthouse-report/
+lighthouse-report.html
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

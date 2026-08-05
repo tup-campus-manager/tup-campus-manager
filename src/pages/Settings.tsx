@@ -15,6 +15,8 @@ import SchoolIcon from '@mui/icons-material/School'
 import { signOut, type User } from 'firebase/auth'
 import { auth } from '../firebase/config'
 
+import { trackEvent } from '../services/analytics.service'
+
 interface SettingsProps {
   user: User
   onLogout: () => void
@@ -27,6 +29,7 @@ function Settings({ user, onLogout }: SettingsProps) {
     try {
       await signOut(auth)
       setDialogOpen(false)
+      trackEvent('logout', { user_email: user.email })
       onLogout()
     } catch (err) {
       console.error(err)

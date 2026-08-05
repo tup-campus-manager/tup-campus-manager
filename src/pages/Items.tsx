@@ -12,6 +12,8 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Avatar from '@mui/material/Avatar'
 
+import { trackEvent } from '../services/analytics.service'
+
 interface Student {
   name: { first: string; last: string }
   email: string
@@ -40,8 +42,8 @@ function setCache(data: Student[]) {
 }
 
 function Items() {
-  const [students, setStudents] = useState<Student[]>([])
-  const [loading, setLoading] = useState<boolean>(true)
+  const [students, setStudents] = useState<Student[]>(() => getCache() ?? [])
+  const [loading, setLoading] = useState<boolean>(() => getCache() === null)
   const [error, setError] = useState<string | null>(null)
   const [search, setSearch] = useState<string>('')
   const [sortBy, setSortBy] = useState<string>('firstName')
@@ -49,8 +51,7 @@ function Items() {
   useEffect(() => {
     const cached = getCache()
     if (cached) {
-      setStudents(cached)
-      setLoading(false)
+      trackEvent('view_students', { count: cached.length })
       return
     }
 
@@ -63,6 +64,7 @@ function Items() {
         setCache(json.results)
         setStudents(json.results)
         setLoading(false)
+        trackEvent('view_students', { count: json.results.length })
       })
       .catch((err) => {
         console.error(err)

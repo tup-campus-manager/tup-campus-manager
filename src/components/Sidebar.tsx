@@ -29,7 +29,7 @@ function Sidebar({ currentPage, onNavigate }: SidebarProps) {
     >
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, px: 2, mb: 2 }}>
         <SchoolIcon sx={{ color: '#60a5fa' }} />
-        <Typography fontWeight={700} color="#f8fafc">
+        <Typography sx={{ fontWeight: 700, color: '#f8fafc' }}>
           Campus Manager
         </Typography>
       </Box>

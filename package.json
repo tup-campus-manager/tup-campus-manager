@@ -7,20 +7,28 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start:desktop": "tauri dev",
+    "build:desktop": "tauri build",
+    "android": "node -e \"require('fs').rmSync('android',{recursive:true,force:true})\" && npm run build && cap add android && cap sync android && cap open android"
   },
   "dependencies": {
+    "@capacitor/android": "^8.5.0",
+    "@capacitor/core": "^8.5.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@fontsource/roboto": "^5.2.10",
     "@mui/icons-material": "^9.0.1",
     "@mui/material": "^9.0.1",
+    "@tauri-apps/api": "^2.11.1",
     "firebase": "^12.14.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5"
   },
   "devDependencies": {
+    "@capacitor/cli": "^8.5.0",
     "@eslint/js": "^9.39.4",
+    "@tauri-apps/cli": "^2.11.4",
     "@types/node": "^24.12.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",

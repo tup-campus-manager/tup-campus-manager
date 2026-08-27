@@ -1,0 +1,74 @@
+import { useState } from 'react'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import CircularProgress from '@mui/material/CircularProgress'
+import Typography from '@mui/material/Typography'
+import SchoolIcon from '@mui/icons-material/School'
+import { signInWithPopup } from 'firebase/auth'
+import { auth, googleProvider } from '../firebase/config'
+
+interface LoginProps {
+  onLogin: () => void
+}
+
+function Login({ onLogin }: LoginProps) {
+  const [loading, setLoading] = useState<boolean>(false)
+  const [error, setError] = useState<string | null>(null)
+
+  async function handleClick() {
+    setLoading(true)
+    setError(null)
+    try {
+      await signInWithPopup(auth, googleProvider)
+      onLogin()
+    } catch (err) {
+      console.error(err)
+      setError('No se pudo iniciar sesión. Intentá de nuevo.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 3,
+        backgroundColor: '#f5f5f5',
+      }}
+    >
+      <SchoolIcon sx={{ fontSize: 80, color: '#1d4ed8' }} />
+
+      <Typography variant="h4" sx={{ fontWeight: 700, color: '#1f2937' }}>
+        Campus Manager
+      </Typography>
+
+      <Typography variant="body1" color="text.secondary">
+        Iniciá sesión para continuar
+      </Typography>
+
+      {error && (
+        <Typography variant="body2" color="error">
+          {error}
+        </Typography>
+      )}
+
+      <Button
+        variant="contained"
+        size="large"
+        onClick={handleClick}
+        disabled={loading}
+        startIcon={loading ? <CircularProgress size={20} color="inherit" /> : null}
+        sx={{ minWidth: 200 }}
+      >
+        {loading ? 'Verificando...' : 'Iniciar sesión con Google'}
+      </Button>
+    </Box>
+  )
+}
+
+export default Login
